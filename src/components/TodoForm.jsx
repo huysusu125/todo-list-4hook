@@ -1,11 +1,16 @@
-import React, {useState} from 'react'
+import React, { useContext, useState } from 'react'
+import { ThemeContext } from '../contexts/ThemeContext'
+import { TodoContext } from '../contexts/TodoContext';
 
-
-const TodoForm = (props) => {
-    const addTodo = props.addTodoFunc;
+const TodoForm = () => {
     
-    const [title, setTitle] = useState('');
 
+    const { theme } = useContext(ThemeContext);
+    const { isLightTheme, light, dark } = theme;
+    const style = isLightTheme ? light : dark;
+    const { addTodo } = useContext(TodoContext);
+
+    const [title, setTitle] = useState('');
     const onTitle = (e) => {
         setTitle(e.target.value);
     }
@@ -18,11 +23,11 @@ const TodoForm = (props) => {
             })
             setTitle('');
         }
-        
+
     }
 
     return (
-        <div>
+        <div style={style}>
             <form>
                 <input type="text" name="title" placeholder="Nhập công việc" onChange={onTitle} value={title} />
                 <button type="button" onClick={addTodoItem}>Thêm</button>
